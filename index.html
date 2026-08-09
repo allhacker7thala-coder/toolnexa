@@ -1,112 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToolNexa - Free Online Tools</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background: #f5f7fb;
+      color: #171717;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background: #0066ff;
+      color: #ffffff;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      flex: 1;
+    }
+    .search-box {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    .tools {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .tool {
+      background: #ffffff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .tool h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .tool p {
+      color: #666;
+      margin-bottom: 1rem;
+    }
+    .tool button {
+      background: #0066ff;
+      color: #ffffff;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .tool button:hover {
+      background: #0052cc;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #e2e8f0;
+      font-size: 0.9rem;
+    }
 
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  text-align: center;
-}
+    /* Modal / Popup Styling for Calculator */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      width: 300px;
+      position: relative;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+    }
 
-.tool h2 {
-  margin-bottom: 10px;
-}
-
-.tool p {
-  color: #666;
-  margin-bottom: 18px;
-}
-
-button {
-  background: #111827;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-button:hover {
-  opacity: 0.85;
-}
-
-footer {
-  text-align: center;
-  padding: 30px;
-  color: #666;
-}
-</style>
+    /* Calculator Style */
+    .calc-screen {
+      width: 100%;
+      height: 50px;
+      font-size: 1.5rem;
+      text-align: right;
+      padding: 5px 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #f9f9f9;
+    }
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .calc-btn {
+      padding: 15px;
+      font-size: 1.2rem;
+      border: none;
+      background: #e0e0e0;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .calc-btn.op { background: #ff9500; color: white; }
+    .calc-btn.eq { background: #0066ff; color: white; grid-column: span 2; }
+    .calc-btn.clear { background: #ff3b30; color: white; }
+  </style>
 </head>
-
 <body>
 
-<header>
-  <h1>ToolNexa 🚀</h1>
-  <p>Simple & Free Online Tools</p>
-</header>
+  <header>
+    <h1>ToolNexa</h1>
+    <p>Simple & Free Online Tools</p>
+  </header>
 
-<div class="container">
+  <div class="container">
+    <input type="text" id="search" placeholder="Search a tool..." onkeyup="searchTools()" class="search-box">
 
-  <input
-    class="search"
-    type="text"
-    placeholder="Search a tool..."
-    onkeyup="searchTools()"
-    id="search"
-  >
+    <div class="tools" id="tools">
+      <!-- Calculator -->
+      <div class="tool">
+        <h2>🧮 Calculator</h2>
+        <p>Quickly calculate numbers easily.</p>
+        <button onclick="openCalculator()">Open Tool</button>
+      </div>
 
-  <div class="tools" id="tools">
+      <!-- Age Calculator -->
+      <div class="tool">
+        <h2>🎂 Age Calculator</h2>
+        <p>Calculate your age easily.</p>
+        <button onclick="alert('Age Calculator coming soon!')">Open Tool</button>
+      </div>
 
-    <div class="tool">
-      <h2>🧮 Calculator</h2>
-      <p>Quickly calculate numbers.</p>
-      <button onclick="alert('Calculator coming soon!')">
-        Open Tool
-      </button>
+      <!-- Unit Converter -->
+      <div class="tool">
+        <h2>📐 Unit Converter</h2>
+        <p>Convert different units.</p>
+        <button onclick="alert('Unit Converter coming soon!')">Open Tool</button>
+      </div>
+
+      <!-- Number Tools -->
+      <div class="tool">
+        <h2>🔢 Number Tools</h2>
+        <p>Useful number calculations.</p>
+        <button onclick="alert('Number Tools coming soon!')">Open Tool</button>
+      </div>
     </div>
-
-    <div class="tool">
-      <h2>🎂 Age Calculator</h2>
-      <p>Calculate your age easily.</p>
-      <button onclick="alert('Age Calculator coming soon!')">
-        Open Tool
-      </button>
-    </div>
-
-    <div class="tool">
-      <h2>📏 Unit Converter</h2>
-      <p>Convert different units.</p>
-      <button onclick="alert('Unit Converter coming soon!')">
-        Open Tool
-      </button>
-    </div>
-
-    <div class="tool">
-      <h2>🔢 Number Tools</h2>
-      <p>Useful number calculations.</p>
-      <button onclick="alert('Number Tools coming soon!')">
-        Open Tool
-      </button>
-    </div>
-
   </div>
-</div>
 
-<footer>
-  © 2026 ToolNexa. All rights reserved.
-</footer>
+  <footer>
+    &copy; 2026 ToolNexa. All rights reserved.
+  </footer>
 
-<script>
-function searchTools() {
-  let search = document.getElementById("search").value.toLowerCase();
-  let tools = document.querySelectorAll(".tool");
+  <!-- Calculator Popup Modal -->
+  <div id="calcModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeCalculator()">&times;</span>
+      <h3 style="margin-bottom: 15px; text-align: center;">Calculator</h3>
+      <input type="text" id="calcDisplay" class="calc-screen" readonly>
+      <div class="calc-grid">
+        <button class="calc-btn clear" onclick="clearCalc()">C</button>
+        <button class="calc-btn" onclick="pressCalc('/')">/</button>
+        <button class="calc-btn" onclick="pressCalc('*')">*</button>
+        <button class="calc-btn op" onclick="pressCalc('-')">-</button>
+        
+        <button class="calc-btn" onclick="pressCalc('7')">7</button>
+        <button class="calc-btn" onclick="pressCalc('8')">8</button>
+        <button class="calc-btn" onclick="pressCalc('9')">9</button>
+        <button class="calc-btn op" onclick="pressCalc('+')">+</button>
 
-  tools.forEach(function(tool) {
-    let text = tool.innerText.toLowerCase();
+        <button class="calc-btn" onclick="pressCalc('4')">4</button>
+        <button class="calc-btn" onclick="pressCalc('5')">5</button>
+        <button class="calc-btn" onclick="pressCalc('6')">6</button>
 
-    if (text.includes(search)) {
-      tool.style.display = "block";
-    } else {
-      tool.style.display = "none";
+        <button class="calc-btn" onclick="pressCalc('1')">1</button>
+        <button class="calc-btn" onclick="pressCalc('2')">2</button>
+        <button class="calc-btn" onclick="pressCalc('3')">3</button>
+
+        <button class="calc-btn" onclick="pressCalc('0')">0</button>
+        <button class="calc-btn" onclick="pressCalc('.')">.</button>
+        <button class="calc-btn eq" onclick="solveCalc()">=</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Search Functionality
+    function searchTools() {
+      let search = document.getElementById("search").value.toLowerCase();
+      let tools = document.querySelectorAll(".tool");
+      tools.forEach(function(tool) {
+        let text = tool.innerText.toLowerCase();
+        if (text.includes(search)) {
+          tool.style.display = "block";
+        } else {
+          tool.style.display = "none";
+        }
+      });
     }
-  });
-}
-</script>
 
+    // Calculator Modal Functions
+    function openCalculator() {
+      document.getElementById("calcModal").style.display = "flex";
+    }
+    function closeCalculator() {
+      document.getElementById("calcModal").style.display = "none";
+    }
+    function pressCalc(val) {
+      document.getElementById("calcDisplay").value += val;
+    }
+    function clearCalc() {
+      document.getElementById("calcDisplay").value = "";
+    }
+    function solveCalc() {
+      try {
+        let exp = document.getElementById("calcDisplay").value;
+        if(exp) {
+          document.getElementById("calcDisplay").value = eval(exp);
+        }
+      } catch(e) {
+        document.getElementById("calcDisplay").value = "Error";
+      }
+    }
+  </script>
 </body>
 </html>
