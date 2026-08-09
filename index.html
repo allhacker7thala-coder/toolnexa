@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToolNexa - Free Online Tools</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f5f7fb;
+  color: #171717;
+}
+
+header {
+  background: #111827;
+  color: white;
+  padding: 25px 20px;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 32px;
+}
+
+header p {
+  margin-top: 8px;
+  color: #cbd5e1;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.search {
+  width: 100%;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+
+.tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.tool {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.tool h2 {
+  margin-bottom: 10px;
+}
+
+.tool p {
+  color: #666;
+  margin-bottom: 18px;
+}
+
+button {
+  background: #111827;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>ToolNexa 🚀</h1>
+  <p>Simple & Free Online Tools</p>
+</header>
+
+<div class="container">
+
+  <input
+    class="search"
+    type="text"
+    placeholder="Search a tool..."
+    onkeyup="searchTools()"
+    id="search"
+  >
+
+  <div class="tools" id="tools">
+
+    <div class="tool">
+      <h2>🧮 Calculator</h2>
+      <p>Quickly calculate numbers.</p>
+      <button onclick="alert('Calculator coming soon!')">
+        Open Tool
+      </button>
+    </div>
+
+    <div class="tool">
+      <h2>🎂 Age Calculator</h2>
+      <p>Calculate your age easily.</p>
+      <button onclick="alert('Age Calculator coming soon!')">
+        Open Tool
+      </button>
+    </div>
+
+    <div class="tool">
+      <h2>📏 Unit Converter</h2>
+      <p>Convert different units.</p>
+      <button onclick="alert('Unit Converter coming soon!')">
+        Open Tool
+      </button>
+    </div>
+
+    <div class="tool">
+      <h2>🔢 Number Tools</h2>
+      <p>Useful number calculations.</p>
+      <button onclick="alert('Number Tools coming soon!')">
+        Open Tool
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  © 2026 ToolNexa. All rights reserved.
+</footer>
+
+<script>
+function searchTools() {
+  let search = document.getElementById("search").value.toLowerCase();
+  let tools = document.querySelectorAll(".tool");
+
+  tools.forEach(function(tool) {
+    let text = tool.innerText.toLowerCase();
+
+    if (text.includes(search)) {
+      tool.style.display = "block";
+    } else {
+      tool.style.display = "none";
+    }
+  });
+}
+</script>
+
+</body>
+</html>
