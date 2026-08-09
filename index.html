@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToolNexa - Online Tools</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f7fb;
+  color: #172033;
+}
+
+header {
+  background: #111827;
+  color: white;
+  text-align: center;
+  padding: 28px 15px;
+}
+
+header h1 {
+  font-size: 34px;
+  margin-bottom: 7px;
+}
+
+header p {
+  color: #cbd5e1;
+}
+
+.container {
+  width: 92%;
+  max-width: 1100px;
+  margin: 28px auto;
+}
+
+.search {
+  width: 100%;
+  padding: 15px 18px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
+  margin-bottom: 25px;
+  background: white;
+}
+
+.tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 23px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,.08);
+}
+
+.card h2 {
+  margin-bottom: 9px;
+}
+
+.card p {
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.no-result {
+  display: none;
+  text-align: center;
+  color: #6b7280;
+  margin-top: 25px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  z-index: 999;
+  padding: 15px;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.panel {
+  background: white;
+  width: 100%;
+  max-width: 430px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 18px;
+  padding: 22px;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  border: none;
+  background: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.panel h2 {
+  margin-bottom: 18px;
+  padding-right: 35px;
+}
+
+.input,
+select {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  margin-bottom: 12px;
+  font-size: 15px;
+  background: white;
+}
+
+.btn {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 9px;
+  background: #111827;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.result {
+  margin-top: 15px;
+  padding: 14px;
+  background: #f3f4f6;
+  border-radius: 9px;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+/* Calculator */
+.display {
+  width: 100%;
+  height: 65px;
+  padding: 10px;
+  text-align: right;
+  font-size: 27px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.calc-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 9px;
+}
+
+.calc-buttons button {
+  height: 55px;
+  border: none;
+  border-radius: 9px;
+  font-size: 18px;
+  cursor: pointer;
+  background: #e5e7eb;
+}
+
+.calc-buttons .op {
+  background: #dbeafe;
+}
+
+.calc-buttons .clear {
+  background: #fee2e2;
+}
+
+.calc-buttons .equal {
+  background: #111827;
+  color: white;
+}
+
+footer {
+  text-align: center;
+  padding: 30px 15px;
+  color: #6b7280;
+}
+
+@media(max-width:500px) {
+  header h1 {
+    font-size: 28px;
+  }
+
+  .container {
+    width: 94%;
+  }
+
+  .panel {
+    padding: 18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>ToolNexa</h1>
+  <p>Free and useful online tools</p>
+</header>
+
+<main class="container">
+
+<input
+  id="search"
+  class="search"
+  type="text"
+  placeholder="🔍 Search tools..."
+>
+
+<div class="tools" id="tools">
+
+  <div class="card" data-name="calculator" onclick="openTool('calculator')">
+    <h2>🧮 Calculator</h2>
+    <p>Perform basic mathematical calculations.</p>
+  </div>
+
+  <div class="card" data-name="age calculator age" onclick="openTool('age')">
+    <h2>🎂 Age Calculator</h2>
+    <p>Calculate your exact age from your date of birth.</p>
+  </div>
+
+  <div class="card" data-name="unit converter length weight temperature" onclick="openTool('unit')">
+    <h2>📏 Unit Converter</h2>
+    <p>Convert length, weight and temperature units.</p>
+  </div>
+
+  <div class="card" data-name="number tools prime even odd palindrome factorial" onclick="openTool('number')">
+    <h2>🔢 Number Tools</h2>
+    <p>Check prime, even, odd, palindrome and factorial.</p>
+  </div>
+
+</div>
+
+<p class="no-result" id="noResult">No tool found.</p>
+
+</main>
+
+<footer>
+  © 2026 ToolNexa
+</footer>
+
+
+<!-- Calculator -->
+<div class="modal" id="calculatorModal">
+<div class="panel">
+
+<button class="close" onclick="closeTool('calculator')">×</button>
+<h2>🧮 Calculator</h2>
+
+<input class="display" id="display" value="0" readonly>
+
+<div class="calc-buttons">
+
+<button class="clear" onclick="clearCalc()">C</button>
+<button onclick="deleteCalc()">⌫</button>
+<button class="op" onclick="addCalc('%')">%</button>
+<button class="op" onclick="addCalc('/')">÷</button>
+
+<button onclick="addCalc('7')">7</button>
+<button onclick="addCalc('8')">8</button>
+<button onclick="addCalc('9')">9</button>
+<button class="op" onclick="addCalc('*')">×</button>
+
+<button onclick="addCalc('4')">4</button>
+<button onclick="addCalc('5')">5</button>
+<button onclick="addCalc('6')">6</button>
+<button class="op" onclick="addCalc('-')">−</button>
+
+<button onclick="addCalc('1')">1</button>
+<button onclick="addCalc('2')">2</button>
+<button onclick="addCalc('3')">3</button>
+<button class="op" onclick="addCalc('+')">+</button>
+
+<button onclick="addCalc('0')" style="grid-column:span 2">0</button>
+<button onclick="addCalc('.')">.</button>
+<button class="equal" onclick="calculate()">=</button>
+
+</div>
+</div>
+</div>
+
+
+<!-- Age Calculator -->
+<div class="modal" id="ageModal">
+<div class="panel">
+
+<button class="close" onclick="closeTool('age')">×</button>
+<h2>🎂 Age Calculator</h2>
+
+<input class="input" type="date" id="birthDate">
+
+<button class="btn" onclick="calculateAge()">Calculate Age</button>
+
+<div class="result" id="ageResult">
+Enter your date of birth.
+</div>
+
+</div>
+</div>
+
+
+<!-- Unit Converter -->
+<div class="modal" id="unitModal">
+<div class="panel">
+
+<button class="close" onclick="closeTool('unit')">×</button>
+<h2>📏 Unit Converter</h2>
+
+<select id="unitType" onchange="updateUnits()">
+<option value="length">Length</option>
+<option value="weight">Weight</option>
+<option value="temperature">Temperature</option>
+</select>
+
+<input class="input" type="number" id="unitValue" placeholder="Enter value">
+
+<select id="fromUnit"></select>
+
+<select id="toUnit"></select>
+
+<button class="btn" onclick="convertUnit()">Convert</button>
+
+<div class="result" id="unitResult">
+Enter a value and choose units.
+</div>
+
+</div>
+</div>
+
+
+<!-- Number Tools -->
+<div class="modal" id="numberModal">
+<div class="panel">
+
+<button class="close" onclick="closeTool('number')">×</button>
+<h2>🔢 Number Tools</h2>
+
+<input class="input" type="number" id="numberInput" placeholder="Enter a number">
+
+<button class="btn" onclick="checkNumber()">Check Number</button>
+
+<div class="result" id="numberResult">
+Enter a number.
+</div>
+
+</div>
+</div>
+
+
+<script>
+
+/* ---------------- SEARCH ---------------- */
+
+const search = document.getElementById("search");
+const cards = document.querySelectorAll(".card");
+const noResult = document.getElementById("noResult");
+
+search.addEventListener("input", function() {
+
+  const text = this.value.toLowerCase().trim();
+  let count = 0;
+
+  cards.forEach(card => {
+
+    const name = card.dataset.name;
+
+    if(name.includes(text)) {
+      card.style.display = "block";
+      count++;
+    } else {
+      card.style.display = "none";
+    }
+
+  });
+
+  noResult.style.display = count === 0 ? "block" : "none";
+
+});
+
+
+/* ---------------- MODALS ---------------- */
+
+function openTool(tool) {
+
+  document.getElementById(tool + "Modal").classList.add("active");
+
+  if(tool === "unit") {
+    updateUnits();
+  }
+
+}
+
+function closeTool(tool) {
+  document.getElementById(tool + "Modal").classList.remove("active");
+}
+
+document.querySelectorAll(".modal").forEach(modal => {
+
+  modal.addEventListener("click", function(e) {
+
+    if(e.target === modal) {
+      modal.classList.remove("active");
+    }
+
+  });
+
+});
+
+
+/* ---------------- CALCULATOR ---------------- */
+
+const display = document.getElementById("display");
+
+function addCalc(value) {
+
+  if(display.value === "0" || display.value === "Error") {
+    display.value = value;
+  } else {
+    display.value += value;
+  }
+
+}
+
+function clearCalc() {
+  display.value = "0";
+}
+
+function deleteCalc() {
+
+  if(display.value.length <= 1) {
+    display.value = "0";
+  } else {
+    display.value = display.value.slice(0,-1);
+  }
+
+}
+
+function calculate() {
+
+  try {
+
+    const expression = display.value;
+
+    if(!/^[0-9+\-*/%.() ]+$/.test(expression)) {
+      display.value = "Error";
+      return;
+    }
+
+    const answer = Function(
+      '"use strict"; return (' + expression + ')'
+    )();
+
+    if(!Number.isFinite(answer)) {
+      display.value = "Error";
+      return;
+    }
+
+    display.value = answer;
+
+  } catch(error) {
+    display.value = "Error";
+  }
+
+}
+
+
+/* ---------------- AGE CALCULATOR ---------------- */
+
+function calculateAge() {
+
+  const input = document.getElementById("birthDate").value;
+  const result = document.getElementById("ageResult");
+
+  if(!input) {
+    result.textContent = "Please enter your date of birth.";
+    return;
+  }
+
+  const birth = new Date(input + "T00:00:00");
+  const today = new Date();
+
+  if(birth > today) {
+    result.textContent = "Birth date cannot be in the future.";
+    return;
+  }
+
+  let years = today.getFullYear() - birth.getFullYear();
+  let months = today.getMonth() - birth.getMonth();
+  let days = today.getDate() - birth.getDate();
+
+  if(days < 0) {
+
+    months--;
+
+    const previousMonth = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      0
+    );
+
+    days += previousMonth.getDate();
+  }
+
+  if(months < 0) {
+    years--;
+    months += 12;
+  }
+
+  result.innerHTML =
+    "<strong>Your age:</strong><br>" +
+    years + " years, " +
+    months + " months, " +
+    days + " days";
+
+}
+
+
+/* ---------------- UNIT CONVERTER ---------------- */
+
+const units = {
+
+  length: {
+    Meter: 1,
+    Kilometer: 1000,
+    Centimeter: 0.01,
+    Millimeter: 0.001,
+    Mile: 1609.344,
+    Yard: 0.9144,
+    Foot: 0.3048,
+    Inch: 0.0254
+  },
+
+  weight: {
+    Kilogram: 1,
+    Gram: 0.001,
+    Milligram: 0.000001,
+    Pound: 0.45359237,
+    Ounce: 0.0283495231
+  },
+
+  temperature: {
+    Celsius: "C",
+    Fahrenheit: "F",
+    Kelvin: "K"
+  }
+
+};
+
+function updateUnits() {
+
+  const type = document.getElementById("unitType").value;
+
+  const from = document.getElementById("fromUnit");
+  const to = document.getElementById("toUnit");
+
+  from.innerHTML = "";
+  to.innerHTML = "";
+
+  Object.keys(units[type]).forEach(unit => {
+
+    from.innerHTML +=
+      `<option value="${unit}">${unit}</option>`;
+
+    to.innerHTML +=
+      `<option value="${unit}">${unit}</option>`;
+
+  });
+
+}
+
+function convertUnit() {
+
+  const type = document.getElementById("unitType").value;
+  const value = Number(document.getElementById("unitValue").value);
+  const from = document.getElementById("fromUnit").value;
+  const to = document.getElementById("toUnit").value;
+  const result = document.getElementById("unitResult");
+
+  if(!Number.isFinite(value)) {
+    result.textContent = "Please enter a valid number.";
+    return;
+  }
+
+  let answer;
+
+  if(type === "temperature") {
+
+    let celsius;
+
+    if(from === "Celsius") {
+      celsius = value;
+    } else if(from === "Fahrenheit") {
+      celsius = (value - 32) * 5 / 9;
+    } else {
+      celsius = value - 273.15;
+    }
+
+    if(to === "Celsius") {
+      answer = celsius;
+    } else if(to === "Fahrenheit") {
+      answer = (celsius * 9 / 5) + 32;
+    } else {
+      answer = celsius + 273.15;
+    }
+
+  } else {
+
+    const baseValue = value * units[type][from];
+
+    answer = baseValue / units[type][to];
+
+  }
+
+  result.innerHTML =
+    "<strong>Result:</strong> " +
+    Number(answer.toFixed(8));
+
+}
+
+
+/* ---------------- NUMBER TOOLS ---------------- */
+
+function checkNumber() {
+
+  const value = Number(
+    document.getElementById("numberInput").value
+  );
+
+  const result = document.getElementById("numberResult");
+
+  if(!Number.isInteger(value) || value < 0) {
+
+    result.textContent =
+      "Please enter a non-negative whole number.";
+
+    return;
+
+  }
+
+  let prime;
+
+  if(value < 2) {
+    prime = false;
+  } else {
+
+    prime = true;
+
+    for(let i = 2; i <= Math.sqrt(value); i++) {
+
+      if(value % i === 0) {
+        prime = false;
+        break;
+      }
+
+    }
+
+  }
+
+  const evenOdd =
+    value % 2 === 0 ? "Even" : "Odd";
+
+  const text = String(value);
+
+  const palindrome =
+    text === text.split("").reverse().join("");
+
+  let factorial = "Not available";
+
+  if(value <= 170) {
+
+    let fact = 1;
+
+    for(let i = 2; i <= value; i++) {
+      fact *= i;
+    }
+
+    factorial = fact.toLocaleString();
+
+  }
+
+  result.innerHTML =
+    "<strong>Number:</strong> " + value + "<br>" +
+    "<strong>Type:</strong> " + evenOdd + "<br>" +
+    "<strong>Prime:</strong> " + (prime ? "Yes" : "No") + "<br>" +
+    "<strong>Palindrome:</strong> " + (palindrome ? "Yes" : "No") + "<br>" +
+    "<strong>Factorial:</strong> " + factorial;
+
+}
+
+</script>
+
+</body>
+  </html>
